@@ -9,12 +9,14 @@ namespace AuthServer
             new()
             {
                 Name = "resource_api1",
+                DisplayName = "Api #1",
                 ApiSecrets = { new("api1.secret".Sha256()) },
                 Scopes = { "api1.read", "api1.upsert", "api1.delete" }
             },
             new()
             {
                 Name = "resource_api2",
+                DisplayName = "Api #2",
                 ApiSecrets = { new("api2.secret".Sha256()) },
                 Scopes = { "api2.read", "api2.upsert", "api2.delete" }
             }

@@ -1,0 +1,56 @@
+@using Microsoft.AspNetCore.Authentication;
+
+@{
+    ViewData["Title"] = "Users Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>This page requires authenticated users to see.</p>
+
+    <div class="row">
+        <div class="col-12">
+            <h3>Claims</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Claim Type</th>
+                        <th>Claim Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in User.Claims)
+                    {
+                        <tr>
+                            <td>@item.Type</td>
+                            <td>@item.Value</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-12">
+            <h3>Authentication Properties</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Authentication Key</th>
+                        <th>Authentication Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        var authenticateResult = await Context.AuthenticateAsync();
+                        foreach (var item in authenticateResult.Properties?.Items ?? new Dictionary<string, string?>())
+                        {
+                            <tr>
+                                <td>@item.Key</td>
+                                <td>@item.Value</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
