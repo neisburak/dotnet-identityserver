@@ -82,21 +82,28 @@ namespace IdentityMembersipAuthServer
             new()
             {
                 ClientId = "angular-app",
-                RequireClientSecret = false,
                 ClientName = "Angular App (JavaScript Client)",
                 AllowedGrantTypes = GrantTypes.Code,
+                RequireClientSecret = false,
+                RequirePkce = true,
+                AllowAccessTokensViaBrowser = true,
+                RequireConsent = false,
                 AllowedScopes =
                 {
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
-                    IdentityServerConstants.StandardScopes.OfflineAccess,
                     "api1.read",
                     "CountryAndCity",
                     "Roles"
                 },
-                RedirectUris = { "https://localhost:4200/callback" },
-                AllowedCorsOrigins = { "https://localhost:4200" },
-                PostLogoutRedirectUris = { "https://localhost:4200" }
+                AccessTokenLifetime = 600,
+                AllowedCorsOrigins = { "http://localhost:4200" },
+                RedirectUris =
+                {
+                    "http://localhost:4200/signin-callback",
+                    "http://localhost:4200/assets/silent-callback.html"
+                },
+                PostLogoutRedirectUris = { "http://localhost:4200/signout-callback" }
             },
             new()
             {

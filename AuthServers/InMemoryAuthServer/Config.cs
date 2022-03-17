@@ -77,21 +77,28 @@ namespace InMemoryAuthServer
             new()
             {
                 ClientId = "angular-app",
-                RequireClientSecret = false,
                 ClientName = "Angular App (JavaScript Client)",
                 AllowedGrantTypes = GrantTypes.Code,
+                RequireClientSecret = false,
+                RequirePkce = true,
+                AllowAccessTokensViaBrowser = true,
+                RequireConsent = false,
                 AllowedScopes =
                 {
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
-                    IdentityServerConstants.StandardScopes.OfflineAccess,
                     "api1.read",
                     "CountryAndCity",
                     "Roles"
                 },
-                RedirectUris = { "https://localhost:4200/callback" },
-                AllowedCorsOrigins = { "https://localhost:4200" },
-                PostLogoutRedirectUris = { "https://localhost:4200" }
+                AccessTokenLifetime = 60,
+                AllowedCorsOrigins = { "http://localhost:4200" },
+                RedirectUris =
+                {
+                    "http://localhost:4200/signin-callback",
+                    "http://localhost:4200/silent-callback"
+                },
+                PostLogoutRedirectUris = { "http://localhost:4200" }
             },
             new()
             {

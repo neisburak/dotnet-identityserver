@@ -1,0 +1,12 @@
+<script src="../../node_modules/oidc-client/dist/oidc-client.min.js"></script>
+<script>
+    var mgr = new Oidc.UserManager();
+    mgr.signinRedirectCallback().then(() => {
+        window.history.replaceState({},
+            window.document.title,
+            window.location.origin);
+        window.location = "/";
+    }, error => {
+        console.error(error);
+    });
+</script>

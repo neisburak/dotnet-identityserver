@@ -34,6 +34,11 @@ builder.Services.AddAuthorization(options =>
     });
 });
 
+builder.Services.AddCors(p => p.AddPolicy("AngularAppPolicy", builder =>
+{
+    builder.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader();
+}));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -42,6 +47,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("AngularAppPolicy");
 
 app.UseHttpsRedirection();
 

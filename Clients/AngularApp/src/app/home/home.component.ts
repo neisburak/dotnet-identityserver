@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/services/auth.service';
+import { User } from 'oidc-client';
+import { Product } from '../models/product.model';
+import { ApiService } from '../services/api.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -7,28 +10,35 @@ import { AuthService } from 'src/services/auth.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  status: string = "";
 
-  constructor(private authService: AuthService) { }
+  currentUser: User | null = null;
+  items: Product[] = [];
 
-  ngOnInit() {
-    this.authService.userManager.getUser().then((user) => {
-      if (user) {
-        console.log(user);
-        this.status = "Welcome";
-      } else {
-        this.status = "User not logged in.";
-      }
+  get currentUserJson() {
+    if (this.currentUser) {
+      return JSON.stringify(this.currentUser, null, 2);
+    }
+    return '';
+  }
+
+  constructor(private authService: AuthService, private apiService: ApiService) { }
+
+  async ngOnInit() {
+    this.currentUser = await this.authService.getUser();
+  }
+
+  onLogin = () => this.authService.login();
+
+  onLogout = () => this.authService.logout()
+
+  onRenewToken = async () => {
+    this.currentUser = await this.authService.renewToken();
+  }
+
+  getProducts = () => {
+    this.apiService.get().subscribe(res => {
+      this.items = res;
     });
-  }
-
-  login() {
-    console.log('asd');
-    this.authService.userManager.signinRedirect();
-  }
-
-  logout() {
-    this.authService.userManager.signoutRedirect();
   }
 
 }
