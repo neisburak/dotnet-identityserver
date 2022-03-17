@@ -92,14 +92,14 @@ namespace CustomMembershipAuthServer
                     "CountryAndCity",
                     "Roles"
                 },
-                AccessTokenLifetime = 600,
+                AccessTokenLifetime = 60,
                 AllowedCorsOrigins = { "http://localhost:4200" },
                 RedirectUris =
                 {
                     "http://localhost:4200/signin-callback",
-                    "http://localhost:4200/assets/silent-callback.html"
+                    "http://localhost:4200/silent-callback"
                 },
-                PostLogoutRedirectUris = { "http://localhost:4200/signout-callback" }
+                PostLogoutRedirectUris = { "http://localhost:4200" }
             },
             new()
             {

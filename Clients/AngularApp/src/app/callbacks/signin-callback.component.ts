@@ -13,8 +13,6 @@ export class SigninCallbackComponent implements OnInit {
 
     ngOnInit(): void {
         new UserManager({ response_mode: 'query' }).signinRedirectCallback().then(() => {
-            // window.history.replaceState({}, window.document.title, window.location.origin);
-            console.log('asdasasd');
             this.router.navigate(['/'], {});
         }, error => {
             console.error(error);
